@@ -32,7 +32,7 @@ const RegisterScreen = () => {
         phone, 
         verificationCode,
       });
-      navigation.navigate('Home');
+      navigation.navigate('HomeTab');
     } catch (error) {
       console.error(error);
       Alert.alert('Ошибка', 'Неверный код верификации. Попробуйте еще раз.');
@@ -47,19 +47,19 @@ const RegisterScreen = () => {
         <>
           <TextInput
           style={styles.input}
-          placeholder="Username"
+          placeholder="ФИО"
           onChangeText={text => setUsername(text)}
           value={username}
           />
           <TextInput
             style={styles.input}
-            placeholder="Phone Number"
+            placeholder="Номер телефона в формате +996"
             onChangeText={text => setPhone(text)}
             value={phone}
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Пароль"
             onChangeText={text => setPassword(text)}
             value={password}
             secureTextEntry

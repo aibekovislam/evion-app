@@ -19,7 +19,7 @@ const LoginScreen = () => {
       const response = await axios.post(`${BASE_URL}/login`, { phone, password });
       const token = response.data.token;
       dispatch({ type: 'LOGIN', payload: token });
-      navigation.navigate('Home');
+      navigation.navigate('HomeTab');
     } catch (error) {
       Alert.alert('Ошибка', 'Неверный номер телефона или пароль');
       console.log({ phone, password });
@@ -32,7 +32,7 @@ const LoginScreen = () => {
       <Text style={styles.title}>Войти</Text>
       <TextInput
         style={styles.input}
-        placeholder="Номер телефона"
+        placeholder="Номер телефона в формате +996"
         onChangeText={text => setPhone(text)}
         value={phone}
       />
@@ -44,7 +44,7 @@ const LoginScreen = () => {
         secureTextEntry
       />
       <Text style={styles.textReg} onPress={() => navigation.navigate('Регистрация')}>Нет аккаунта? Зарегистрируйтесь.</Text>
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Войти" onPress={handleLogin} />
     </ScrollView>
   );
 };
