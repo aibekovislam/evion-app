@@ -9,6 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
+
 const ProfileScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -46,7 +47,9 @@ const ProfileScreen = () => {
 
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
+
             <Text style={styles.userInfoTitle}>gcfuyd</Text>
+
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
           <View style={styles.userInfoItem}>
@@ -58,6 +61,8 @@ const ProfileScreen = () => {
             <Text style={styles.userInfoSubTitle}>Following</Text>
           </View>
         </View>
+
+
 
       </ScrollView>
     </SafeAreaView>
@@ -127,4 +132,6 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
   },
+
 });
+
