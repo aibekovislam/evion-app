@@ -1,43 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import io from 'socket.io-client';
+import { View, StyleSheet,Text } from 'react-native';
+import MapView, { Circle } from 'react-native-maps';
+import { requestForegroundPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 
-const socket = io('ws://https://eviona-pp-25e208506c12.herokuapp.com/');
 
 const HomePage = () => {
   const [userLocation, setUserLocation] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-
-      if (status === 'granted') {
-        const location = await Location.getCurrentPositionAsync({});
-        setUserLocation(location.coords);
-
-        // Отправляем местоположение на сервер как объект
-        socket.emit('locationUpdate', {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        });
-
-        Location.watchPositionAsync(
-          { accuracy: Location.Accuracy.High, timeInterval: 1000 },
-          (newLocation) => {
-            setUserLocation(newLocation.coords);
-            console.log(newLocation)
-            // Отправляем обновленное местоположение на сервер
-            socket.emit('locationUpdate', {
-              latitude: newLocation.coords.latitude,
-              longitude: newLocation.coords.longitude,
-            });
-          }
-        );
-      }
-    })();
-  }, []);
+  const [userHeading, setUserHeading] = useState(0)
+  useEffect(() => {( async () => {
+    const { status } = await requestForegroundPermissionsAsync()
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied')
+    } else {
+      const locationSubscription = await watchPositionAsync({
+            accuracy: Accuracy.Highest,
+            timeInterval: 5000,
+            distanceInterval: 1,
+      }, (location) => {
+        setUserLocation(location)
+        console.log('New location update: ' + location.coords.latitude + ', ' + location.coords.longitude)
+      })
+    } return () => locationSubscription.remove()
+  })()}, [])
 
   return (
     <View style={styles.container}>
@@ -51,14 +35,22 @@ const HomePage = () => {
         }}
       >
         {userLocation && (
-          <Marker
-            coordinate={{
-              latitude: userLocation.latitude,
-              longitude: userLocation.longitude,
+          <Circle
+            center={{
+              latitude: userLocation.coords.latitude,
+              longitude: userLocation.coords.longitude,
             }}
-            title="Your Location"
-            description="Your Current Location"
-          />
+            radius={10}
+            strokeColor="rgba(0, 0, 255, 0.2)"
+            fillColor="rgba(0, 0, 255, 0.5)"
+            strokeWidth={1}
+          >
+            <View style={styles.userHeading}>
+              <View style={{ transform: [{ rotate: `${userHeading}deg` }] }}>
+                <Text style={{ color: 'blue', fontSize: 18 }}>↑</Text>
+              </View>
+            </View>
+          </Circle>
         )}
       </MapView>
     </View>
@@ -71,6 +63,14 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  userHeading: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
