@@ -7,6 +7,7 @@ import RegisterScreen from '../components/Register';
 import HomePage from '../pages/HomePage';
 import ProfileScreen from '../pages/ProfileScreen';
 
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 

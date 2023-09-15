@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
+
 
 const ProfileScreen = () => {
   return (
@@ -38,7 +47,9 @@ const ProfileScreen = () => {
 
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{posts.length}</Text>
+
+            <Text style={styles.userInfoTitle}>gcfuyd</Text>
+
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
           <View style={styles.userInfoItem}>
@@ -51,7 +62,8 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <PostCard />
+
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -120,4 +132,6 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
   },
+
 });
+
