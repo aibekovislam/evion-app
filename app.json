@@ -4,12 +4,12 @@
     "slug": "test",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/1.svg",
+    "icon": "./assets/1.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/1.svg",
+      "image": "./assets/1.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#028572"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/1.jpg",
+        "backgroundColor": "#028572"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/1.jpg"
     },
     "extra": {
       "eas": {

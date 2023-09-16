@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,20 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
+import {useUserContext} from "../contexts/UserContext"
+import { useAuth } from "../contexts/AuthContext";
 
 
 const ProfileScreen = () => {
+
+  // const { getProfile, oneUser } = useAuth()
+
+  // useEffect(() => {
+  //   getProfile()
+  // }, [])
+
+  // console.log(oneUser)
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, Alert, ScrollView, Image } from 'react-native';
 import axios from 'axios';
 import { styles } from '../styles/AuthorizationStyles';
 import { useNavigation } from '@react-navigation/native';
+import ButtonEvion from './ButtonEvion';
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState('');
@@ -10,6 +11,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [ changeWindow, setChangeWindow ] = useState(false);
+  const [ phoneIsExist, setPhoneIsExist ] = useState(false);
   const navigation = useNavigation();
 
   const handleRegister = async () => {
@@ -19,7 +21,14 @@ const RegisterScreen = () => {
         phone,
         password,
       });
-      setChangeWindow(true)
+      if(response.data.error === 'Пользователь с таким номером уже зарегистрирован') {
+        setPhoneIsExist(true);
+      } else {
+        setPhoneIsExist(false);
+        setChangeWindow(true);
+      }
+      const response2 = await axios.get('https://eviona-pp-25e208506c12.herokuapp.com/profile');
+      console.log(response2)
     } catch (error) {
       console.error(error);
       Alert.alert('Ошибка', 'Что-то пошло не так. Попробуйте еще раз.');
@@ -41,8 +50,13 @@ const RegisterScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>{ !changeWindow ? "Регистрация" : "Верификация" }</Text>
-      
+      <Image
+        style={styles.tinyLogo}
+        source={require('../static/3.png')}
+      />
+      { phoneIsExist && (
+        <Text style={styles.errorTitle}>Пользователь с таким номером уже зарегистрирован</Text>
+      ) }
       { !changeWindow && (
         <>
           <TextInput
@@ -64,7 +78,7 @@ const RegisterScreen = () => {
             value={password}
             secureTextEntry
           />
-          <Button title="Register" onPress={handleRegister} />
+          <ButtonEvion title="Регистрация" onPress={handleRegister} />
         </>
       ) }
 
@@ -76,7 +90,7 @@ const RegisterScreen = () => {
             onChangeText={text => setVerificationCode(text)}
             value={verificationCode}
           />
-          <Button title="Verify" onPress={handleVerify} />
+          <ButtonEvion title="Подтвердить" onPress={handleVerify} />
         </>
       )}
     </ScrollView>
