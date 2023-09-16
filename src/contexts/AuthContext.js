@@ -17,7 +17,7 @@ const authReducer = (state, action) => {
     case 'LOGOUT':
       return { ...state, token: null };
     case 'oneUser':
-        return { ...state, oneUser: null };
+        return { ...state, oneUser: action.payload };
     default:
       return state;
   }
@@ -28,10 +28,16 @@ export const AuthProvider = ({ children }) => {
 
   const getProfile = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/profile`);
+      const token = await AsyncStorage.getItem("token");
+
+      const response = await axios.get(`${BASE_URL}/profile`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
       dispatch({
         type: 'oneUser',
-        payload: response
+        payload: response.data.user
       })
     } catch (error) {
       console.log(error)

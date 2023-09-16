@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -8,19 +8,21 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import {useUserContext} from "../contexts/UserContext"
 import { useAuth } from "../contexts/AuthContext";
 
 
 const ProfileScreen = () => {
+  const { getProfile, oneUser } = useAuth()
 
-  // const { getProfile, oneUser } = useAuth()
+  useEffect(() => {
+    getProfile()
+  }, [])
 
-  // useEffect(() => {
-  //   getProfile()
-  // }, [])
-
-  // console.log(oneUser)
+  if (!oneUser) {
+    return <Text>Loading...</Text>;
+  }
+  
+  console.log(oneUser)
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -32,40 +34,21 @@ const ProfileScreen = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Image style={styles.userImg} />
-        <Text style={styles.userName}>Ura</Text>
+        <Image source={"https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg"} style={styles.userImg} />
+        <Text style={styles.userName}>{ oneUser?.username }</Text>
         {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
-        <Text style={styles.aboutUser}></Text>
-        <View style={styles.userBtnWrapper}>
-          <>
-            <TouchableOpacity style={styles.userBtn}>
-              <Text style={styles.userBtnTxt}>Message</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.userBtn}>
-              <Text style={styles.userBtnTxt}>Follow</Text>
-            </TouchableOpacity>
-          </>
-
-          <>
-            <TouchableOpacity style={styles.userBtn}>
-              <Text style={styles.userBtnTxt}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.userBtn}>
-              <Text style={styles.userBtnTxt}>Logout</Text>
-            </TouchableOpacity>
-          </>
-        </View>
-
+        <Text style={styles.aboutUser}>{ oneUser?.phone }</Text>
+  
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
 
-            <Text style={styles.userInfoTitle}>gcfuyd</Text>
+            <Text style={styles.userInfoTitle}>{ oneUser?.wallet.transactions.length === 0 ? 0 : oneUser?.wallet.transactions.length}</Text>
 
-            <Text style={styles.userInfoSubTitle}>Posts</Text>
+            <Text style={styles.userInfoSubTitle}>Транзакции</Text>
           </View>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>10,000</Text>
-            <Text style={styles.userInfoSubTitle}>Followers</Text>
+            <Text style={styles.userInfoTitle}>{ oneUser?.wallet.walletBalance } сом</Text>
+            <Text style={styles.userInfoSubTitle}>Кошелек</Text>
           </View>
           <View style={styles.userInfoItem}>
             <Text style={styles.userInfoTitle}>100</Text>
