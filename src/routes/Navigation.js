@@ -2,11 +2,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import LoginScreen from '../components/LoginScreen';
 import RegisterScreen from '../components/Register';
 import HomePage from '../pages/HomePage';
 import ProfileScreen from '../pages/ProfileScreen';
-
+import LoginScreen from '../pages/LoginScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

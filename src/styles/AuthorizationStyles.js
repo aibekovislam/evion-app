@@ -47,7 +47,8 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center'
     },
-    clicked: {
-      backgroundColor: '#96e3d8'
+    disabledButton: {
+      backgroundColor: "#029983",
+      opacity: 0.7
     }
 });

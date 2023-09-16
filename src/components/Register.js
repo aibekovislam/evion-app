@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, ScrollView, Image } from 'react-native';
-import axios from 'axios';
+import { Text, TextInput, Alert, ScrollView, Image } from 'react-native';
 import { styles } from '../styles/AuthorizationStyles';
 import { useNavigation } from '@react-navigation/native';
 import ButtonEvion from './ButtonEvion';
+import { useAuth } from '../contexts/AuthContext';
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState('');
@@ -12,41 +12,36 @@ const RegisterScreen = () => {
   const [verificationCode, setVerificationCode] = useState('');
   const [ changeWindow, setChangeWindow ] = useState(false);
   const [ phoneIsExist, setPhoneIsExist ] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigation = useNavigation();
+  const { register, verify } = useAuth();
 
-  const handleRegister = async () => {
+  const handleRegister = () => {
     try {
-      const response = await axios.post('https://eviona-pp-25e208506c12.herokuapp.com/register', {
-        username,
-        phone,
-        password,
-      });
-      if(response.data.error === 'Пользователь с таким номером уже зарегистрирован') {
-        setPhoneIsExist(true);
-      } else {
-        setPhoneIsExist(false);
-        setChangeWindow(true);
-      }
-      const response2 = await axios.get('https://eviona-pp-25e208506c12.herokuapp.com/profile');
-      console.log(response2)
+      setIsButtonDisabled(true);
+      const response = register(username, phone, password);
+      setChangeWindow(true);
+      setIsButtonDisabled(false);
     } catch (error) {
-      console.error(error);
-      Alert.alert('Ошибка', 'Что-то пошло не так. Попробуйте еще раз.');
+      console.log(error);
+      setChangeWindow(false);
+      setIsButtonDisabled(false);
+      Alert.alert("Ошибка", "Вы не правильно ввели данные");
     }
-  };
+  }
 
-  const handleVerify = async () => {
+  const handleVerify = () => {
     try {
-      const response = await axios.post('https://eviona-pp-25e208506c12.herokuapp.com/verify', {
-        phone, 
-        verificationCode,
-      });
-      navigation.navigate('HomeTab');
+      setIsButtonDisabled(true);
+      const response = verify(phone, verificationCode);
+      navigation.navigate("HomeTab");
+      setIsButtonDisabled(false);
     } catch (error) {
-      console.error(error);
-      Alert.alert('Ошибка', 'Неверный код верификации. Попробуйте еще раз.');
+      console.log(error);
+      setIsButtonDisabled(false);
+      Alert.alert("Ошибка", "Вы не правильно ввели данные");
     }
-  };
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

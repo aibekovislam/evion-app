@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navigation from './src/routes/Navigation';
 import { AuthProvider } from './src/contexts/AuthContext';
 
