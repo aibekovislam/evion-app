@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import MapView, { Circle, Marker } from 'react-native-maps';
-import { requestForegroundPermissionsAsync, Accuracy, getCurrentPositionAsync } from 'expo-location';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { mapStyles } from '../styles/MapStyles';
+import customMarkerImage from '../../assets/icon23.png';
+import { Accuracy, getCurrentPositionAsync, requestForegroundPermissionsAsync } from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions';
 
-const MapScreen = () => {
-  const [location , setLocation]= useState(null);
+const MapScreen = ({ locations, selectedLocation }) => {
+  const [ userLocation, setUserLocation ] = useState(null);
 
   useEffect( () => {
     (async() => {
@@ -16,26 +18,46 @@ const MapScreen = () => {
       }
       let location= await getCurrentPositionAsync({
         accuracy: Accuracy.BestForNavigation,
-        maximumAge: 10000
+        maximumAge: 100
       });
-      setLocation(location);
+      setUserLocation(location);
     })();
   },[]);
+  console.log(userLocation)
 
   return (
     <View style={mapStyles.container}>
-      <MapView 
+      <MapView
         showsMyLocationButton={true}
-        showsUserLocation= {true}
+        showsUserLocation={true}
         style={mapStyles.map}
-        mapPadding={{top: 690, right: 20, bottom: 10, left: 20}}
+        mapPadding={{ top: 90, right: 20, bottom: 10, left: 20 }}
         initialRegion={{
           latitude: 42.8751511,
           longitude: 74.598045,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        >
+        userLocationPriority={'high'}
+        userLocationFastestInterval={100}
+        showsCompass={false}
+      >
+        {locations?.map((location, index) => (
+          <Marker
+            key={index}
+            coordinate={{ latitude: location?.latitude, longitude: location?.longitude }}
+            title={location.name}
+            description={"Станция Evion"}
+            image={customMarkerImage}
+          />
+        ))}
+        <MapViewDirections
+          origin={userLocation?.coords}
+          destination={selectedLocation}
+          apikey={"AIzaSyADp9Xd0Zj1Gwe8I7CY0WaUCau1Tfl76hY"}
+          strokeWidth={5}
+          mode={'DRIVING'}
+        />
       </MapView>
     </View>
   );

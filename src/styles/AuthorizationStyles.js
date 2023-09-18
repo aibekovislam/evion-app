@@ -41,6 +41,24 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center'
     },  
+    appButtonContainer2: {
+      borderRadius: 10,
+      paddingHorizontal: 12,
+      width: '100%',
+      height: 55,
+      borderRadius: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10
+    },
+    appButtonText2: {
+      color: "#fff",
+      paddingHorizontal: 10,
+      fontSize: 18,
+      textAlign: 'center',
+      fontWeight: 'bold'
+    },  
     errorTitle: {
       color: 'red',
       fontWeight: 'bold',

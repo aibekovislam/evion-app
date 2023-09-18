@@ -34,7 +34,7 @@ const ProfileScreen = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Image source={"https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg"} style={styles.userImg} />
+        <Image source={{ uri: "https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg" }} style={styles.userImg} />
         <Text style={styles.userName}>{ oneUser?.username }</Text>
         {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
         <Text style={styles.aboutUser}>{ oneUser?.phone }</Text>

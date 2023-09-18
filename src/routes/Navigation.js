@@ -22,9 +22,7 @@ const CustomBottomNavbar = () => {
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Авторизация" screenOptions={{
-      headerShown: false,
-    }}>
+      <Stack.Navigator initialRouteName="Авторизация" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Авторизация" component={LoginScreen} />
         <Stack.Screen name="Регистрация" component={RegisterScreen} />
         <Stack.Screen name="HomeTab" component={CustomBottomNavbar} />
