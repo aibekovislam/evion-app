@@ -34,7 +34,7 @@ const ProfileScreen = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Image source={{ uri: "https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg" }} style={styles.userImg} />
+        <Image source={require("../../assets/man_8566908.png")} style={styles.userImg} />
         <Text style={styles.userName}>{ oneUser?.username }</Text>
         {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
         <Text style={styles.aboutUser}>{ oneUser?.phone }</Text>
@@ -51,12 +51,14 @@ const ProfileScreen = () => {
             <Text style={styles.userInfoSubTitle}>Кошелек</Text>
           </View>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>100</Text>
-            <Text style={styles.userInfoSubTitle}>Following</Text>
+            <Text style={styles.userInfoTitle}>100мин</Text>
+            <Text style={styles.userInfoSubTitle}>Заряжались</Text>
           </View>
         </View>
 
-
+        <View>
+          { /* Credit Card */ }
+        </View>
 
       </ScrollView>
     </SafeAreaView>

@@ -13,7 +13,7 @@ function ButtonStation({ onPress, title, disabled, background }) {
       ]}
       disabled={disabled}
     >
-      <Text style={styles.appButtonText2}>{disabled ? "Загрузка" : title}</Text>
+      <Text style={styles.appButtonText2}>{title}</Text>
     </TouchableOpacity>
   )
 }

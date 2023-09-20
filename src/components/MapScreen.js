@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { mapStyles } from '../styles/MapStyles';
-import customMarkerImage from '../../assets/icon23.png';
+import customMarkerImage from '../../assets/vdfdv2.png';
 import { Accuracy, getCurrentPositionAsync, requestForegroundPermissionsAsync } from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 
@@ -23,6 +23,7 @@ const MapScreen = ({ locations, selectedLocation }) => {
       setUserLocation(location);
     })();
   },[]);
+  
   console.log(userLocation)
 
   return (
@@ -48,7 +49,7 @@ const MapScreen = ({ locations, selectedLocation }) => {
             coordinate={{ latitude: location?.latitude, longitude: location?.longitude }}
             title={location.name}
             description={"Станция Evion"}
-            image={customMarkerImage}
+            // image={customMarkerImage}
           />
         ))}
         <MapViewDirections
