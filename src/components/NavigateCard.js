@@ -5,7 +5,7 @@ import { styles } from '../styles/AuthorizationStyles';
 import { useAuth } from '../contexts/AuthContext';
 
 function NavigateCard({ locations, setSelectedLocation }) {
-  const { getProfile, oneUser, changeStatus } = useAuth();
+  const { getProfile, oneUser, changeStatus, changeClientCount, changeClientCountDec } = useAuth();
   const [counter, setCounter] = useState(0);
   const [checked, setChecked] = useState(false);
   const [ user, setUser ] = useState(null);
@@ -13,6 +13,7 @@ function NavigateCard({ locations, setSelectedLocation }) {
   const handleCounter = () => {
     if (counter < 6) {
       setCounter(counter + 1);
+      changeClientCount(oneUser?._id, counter)
     } else {
       setCounter(counter);
     }
@@ -21,6 +22,7 @@ function NavigateCard({ locations, setSelectedLocation }) {
   const handleDeCounter = () => {
     if (counter > 0) {
       setCounter(counter - 1);
+      changeClientCountDec(oneUser?._id, counter)
     } else if (counter < 0) {
       setCounter(counter);
     }
@@ -33,18 +35,19 @@ function NavigateCard({ locations, setSelectedLocation }) {
   useEffect(() => {
     if(oneUser) {
       setUser(oneUser);
-      setCounter(oneUser.clients_count)
+      setCounter(oneUser.clients_count);
+      setChecked(oneUser.status); 
     }
-  }, [oneUser]);
+  }, [oneUser]);  
 
 
   const handleSwitchToggle = () => {
-    setChecked(!checked)
     if (user?._id) {
       console.log("Отправляем запрос на сервер...");
-      changeStatus(user?._id, { status: checked })
+      changeStatus(user?._id, { status: !checked }) 
         .then((response) => {
           console.log(oneUser)
+          setChecked(!checked)
         })
         .catch((error) => {
           console.error("Ошибка при отправке запроса:", error);
@@ -52,7 +55,7 @@ function NavigateCard({ locations, setSelectedLocation }) {
     } else {
       console.warn("ID пользователя не определен.", user?._id);
     }
-  };
+  };  
 
   console.log(oneUser)
 

@@ -103,22 +103,19 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  async function changeClientCount(user_id) {
+  async function changeClientCount(user_id, count) {
     try {
-      const response = await axios.post(`${BASE_URL}/change_client_count/${user_id}`);
-      console.log(response)
-
+      const response = await axios.post(`${BASE_URL}/change_client_count/${user_id}`, count);
       getProfile();
     } catch (error) {
       console.log(error)
     }
   }
 
-  async function changeClientCountDec(user_id) {
+  async function changeClientCountDec(user_id, count) {
     try {
-      const response = await axios.post(`${BASE_URL}/change_client_dec_count/${user_id}`);
-      console.log(response)
-
+      const response = await axios.post(`${BASE_URL}/change_client_dec_count/${user_id}`, count);
+      getProfile();
       getProfile();
     } catch (error) {
       console.log(error)
