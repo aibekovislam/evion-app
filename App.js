@@ -7,7 +7,7 @@ export default function App() {
   return (
     <AuthProvider>
       <LocationProvider>
-        <Navigation />
+          <Navigation />
       </LocationProvider>
     </AuthProvider>
   );

@@ -12,17 +12,17 @@ import { useAuth } from "../contexts/AuthContext";
 
 
 const ProfileScreen = () => {
-  const { getProfile, oneUser } = useAuth()
+  // const { getProfile, oneUser } = useAuth()
 
-  useEffect(() => {
-    getProfile()
-  }, [])
+  // useEffect(() => {
+  //   getProfile()
+  // }, [])
 
-  if (!oneUser) {
-    return <Text>Loading...</Text>;
-  }
+  // if (!oneUser) {
+  //   return <Text>Loading...</Text>;
+  // }
   
-  console.log(oneUser)
+  // console.log(oneUser)
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>

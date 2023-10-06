@@ -86,7 +86,44 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
       throw new Error("Ошибка аутентификации");
     }
-  };  
+  }; 
+  
+  async function changeStatus(user_id, status) {
+    try {
+      const response = await axios.post(`${BASE_URL}/change_status/${user_id}`, status);
+
+      dispatch({
+        type: 'status',
+        payload: response.data.status
+      })
+      
+      getProfile();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function changeClientCount(user_id) {
+    try {
+      const response = await axios.post(`${BASE_URL}/change_client_count/${user_id}`);
+      console.log(response)
+
+      getProfile();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function changeClientCountDec(user_id) {
+    try {
+      const response = await axios.post(`${BASE_URL}/change_client_dec_count/${user_id}`);
+      console.log(response)
+
+      getProfile();
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const value = {
     oneUser: state.oneUser,
@@ -94,6 +131,9 @@ export const AuthProvider = ({ children }) => {
     register,
     verify,
     login,
+    changeStatus,
+    changeClientCount,
+    changeClientCountDec,
     dispatch,
     state
   }

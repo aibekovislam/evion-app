@@ -29,8 +29,8 @@ const MapScreen = ({ locations, selectedLocation }) => {
   return (
     <View style={mapStyles.container}>
       <MapView
-        showsMyLocationButton={true}
-        showsUserLocation={true}
+        showsMyLocationButton={false}
+        showsUserLocation={false}
         style={mapStyles.map}
         mapPadding={{ top: 90, right: 20, bottom: 10, left: 20 }}
         initialRegion={{
@@ -43,6 +43,12 @@ const MapScreen = ({ locations, selectedLocation }) => {
         userLocationFastestInterval={100}
         showsCompass={false}
       >
+        { userLocation ? (
+          <Marker
+            coordinate={userLocation?.coords}
+            image={require("../pages/Таксишка.png")}
+          />
+        ) : (null) }
         {locations?.map((location, index) => (
           <Marker
             key={index}

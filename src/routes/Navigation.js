@@ -8,24 +8,16 @@ import ProfileScreen from '../pages/ProfileScreen';
 import LoginScreen from '../pages/LoginScreen';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
-const CustomBottomNavbar = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Главная" component={HomePage} />
-      <Tab.Screen name="Профиль" component={ProfileScreen} />
-    </Tab.Navigator>
-  );
-};
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Авторизация" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator  initialRouteName="Авторизация" screenOptions={{ headerShown: true, headerStyle: {
+        backgroundColor: '#145BA6'
+      }, headerTintColor: '#145BA6' }}>
         <Stack.Screen name="Авторизация" component={LoginScreen} />
         <Stack.Screen name="Регистрация" component={RegisterScreen} />
-        <Stack.Screen name="HomeTab" component={CustomBottomNavbar} />
+        <Stack.Screen name="HomeTab" component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

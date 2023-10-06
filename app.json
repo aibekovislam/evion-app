@@ -4,12 +4,28 @@
     "slug": "test",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/1.jpg",
+    "icon": "./assets/driver_main_loader.png",
     "userInterfaceStyle": "light",
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    },
     "splash": {
-      "image": "./assets/1.jpg",
+      "image": "./assets/driver_main_loader.png",
       "resizeMode": "contain",
-      "backgroundColor": "#028572"
+      "backgroundColor": "#145BA6"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +35,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/1.jpg",
-        "backgroundColor": "#028572"
+        "foregroundImage": "./assets/driver_main_loader.png",
+        "backgroundColor": "#145BA6"
       }
     },
     "web": {
-      "favicon": "./assets/1.jpg"
+      "favicon": "./assets/driver_main_loader.png"
     },
     "extra": {
       "eas": {
