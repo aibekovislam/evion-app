@@ -3,7 +3,6 @@ import MapScreen from '../components/MapScreen';
 import { View, StyleSheet, Text } from 'react-native';
 import NavigateCard from '../components/NavigateCard';
 import { useLocation } from '../contexts/LocationContext';
-import { useAuth } from '../contexts/AuthContext';
 
 const HomePage = () => {
   const { getLocations, locations } = useLocation();

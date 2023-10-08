@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import Navigation from './src/routes/Navigation';
-import { AuthProvider } from './src/contexts/AuthContext';
 import { LocationProvider } from './src/contexts/LocationContext';
+import { Provider } from 'react-redux';
+import store from './src/store/store';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <LocationProvider>
-          <Navigation />
-      </LocationProvider>
-    </AuthProvider>
+    <LocationProvider>
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    </LocationProvider>
   );
 }

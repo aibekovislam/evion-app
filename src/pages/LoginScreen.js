@@ -1,65 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { Text, TextInput, Alert, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styles/AuthorizationStyles';
-import { useAuth } from '../contexts/AuthContext';
 import ButtonEvion from '../components/ButtonEvion';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LogoSVG from '../static/EcoTaxiLogo';
+import { useDispatch } from 'react-redux';
+import { signInUser } from '../store/actions/authActions';
 
 const LoginScreen = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [ username, setUsername ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ isButtonDisabled, setIsButtonDisabled ] = useState(false);
   const navigation = useNavigation();
-  const { login, dispatch } = useAuth();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isButtonDisabled) {
-      handleLogin();
+  async function handleSignIn() {
+    setIsButtonDisabled(true);
+    const response = await signInUser(username, password, dispatch);
+    const user_id = response.user_id;
+    const user_data = {
+      user_id: user_id,
+      username: username,
+      password: password
     }
-  }, [isButtonDisabled]);
+    await AsyncStorage.setItem('user', JSON.stringify(user_data));
 
-  useEffect(() => {
-    const checkToken = async () => {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
-          dispatch({ type: 'LOGIN', payload: token });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    checkToken();
-  }, [dispatch]);  
-
-  const handleLogin = async () => {
-    try {
-      setIsButtonDisabled(true);
-      const response = await login(phoneNumber, password);
-      navigation.navigate("HomeTab");
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Ошибка", "Вы ввели неверные данные");
-    } finally {
-      setIsButtonDisabled(false);
+    if(user_data?.user_id) {
+      navigation.navigate('Регистрация');
+    } else {
+      navigation.navigate('HomeTab');
     }
-  };  
+    setIsButtonDisabled(false);
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        style={styles.tinyLogo}
-        source={require('../static/3.png')}
-      />
-      <TextInput
+      <LogoSVG />
+      <TextInput 
         style={styles.input}
-        placeholder="Номер телефона"
-        onChangeText={text => setPhoneNumber(text.replace(/[^0-9]/g, ''))}
-        value={phoneNumber}
-        keyboardType="phone-pad"
-        maxLength={9}
+        placeholder="Имя пользователя"
+        onChangeText={(e) => setUsername(e)}
+        value={username}
       />
       <TextInput
         style={styles.input}
@@ -72,8 +54,8 @@ const LoginScreen = () => {
         Нет аккаунта? Зарегистрируйтесь.
       </Text>
       <ButtonEvion
+        onPress={() => handleSignIn()}
         title="Войти"
-        onPress={handleLogin}
         disabled={isButtonDisabled}
         style={isButtonDisabled ? styles.clicked : null}
       />

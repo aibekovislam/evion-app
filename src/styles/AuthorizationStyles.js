@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+
 export const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -15,16 +16,17 @@ export const styles = StyleSheet.create({
       borderWidth: 1,
       marginBottom: 10,
       paddingHorizontal: 10,
-      borderRadius: 5
+      borderRadius: 5,
+      color: '#145BA6'
     },
     textReg: {
-      color: '#028572'
+      color: '#145BA6'
     },
     tinyLogo: {
       marginBottom: 20
     },
     appButtonContainer: {
-      backgroundColor: "#028572",
+      backgroundColor: "#145BA6",
       borderRadius: 10,
       paddingHorizontal: 12,
       width: '100%',
@@ -66,7 +68,7 @@ export const styles = StyleSheet.create({
       textAlign: 'center'
     },
     disabledButton: {
-      backgroundColor: "#029983",
+      backgroundColor: "#145BA6",
       opacity: 0.7
     },
     text: {
@@ -115,5 +117,53 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       gap: 15
+    },
+    menu: {
+      width: 54,
+      height: 54,
+      borderRadius: 100,
+      backgroundColor: '#145BA6',
+      position: 'absolute',
+      top: 10,
+      left: 10, 
+      right: 0,
+      zIndex: 2,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    geo_btn: {
+      width: 54,
+      height: 54,
+      borderRadius: 100,
+      backgroundColor: '#145BA6',
+      position: 'absolute',
+      top: 10,
+      left: '83%', 
+      right: 0,
+      zIndex: 2,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    countAllClients: {
+      width: 65,
+      height: 75,
+      borderRadius: 6,
+      backgroundColor: '#145BA6',
+      position: 'absolute',
+      top: '47%',
+      left: 310, 
+      right: 0,
+      zIndex: 2,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    count_cli: {
+      fontSize: 24,
+      color: 'white',
+      fontWeight: 'bold'
+    },
+    small_text: {
+      color: 'white',
+      fontSize: 8
     }
 });
