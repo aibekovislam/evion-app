@@ -1,2 +1,2 @@
-export const BASE_URL = 'https://eviona-pp-25e208506c12.herokuapp.com';
-export const API_URL = 'http://104.198.29.72'
+export const API_URL = 'http://104.198.29.72';
+export const GOOGLE_API_KEY = 'AIzaSyADp9Xd0Zj1Gwe8I7CY0WaUCau1Tfl76hY';

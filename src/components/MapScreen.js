@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import { mapStyles } from '../styles/MapStyles';
-import customMarkerImage from '../../assets/vdfdv2.png';
 import { Accuracy, getCurrentPositionAsync, requestForegroundPermissionsAsync } from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 import { styles } from '../styles/AuthorizationStyles';
 import MenuSVG from '../static/MenuSVG';
 import GeoSVG from '../static/GeoSVG';
+import { GOOGLE_API_KEY } from '../utils/consts';
+import TaxCarSVG from '../static/tax_car';
 
 
 const MapScreen = ({ locations, selectedLocation }) => {
   const [ userLocation, setUserLocation ] = useState(null);
+  const mapViewRef = useRef(null);
 
   useEffect( () => {
     (async() => {
@@ -27,6 +29,23 @@ const MapScreen = ({ locations, selectedLocation }) => {
       setUserLocation(location);
     })();
   },[]);
+
+  useEffect(() => {
+    if (userLocation) {
+      centerMapOnUserLocation();
+    }
+  }, [userLocation]);  
+
+  const centerMapOnUserLocation = () => {
+    if (userLocation) {
+      mapViewRef.current?.animateToRegion({
+        latitude: userLocation.coords.latitude,
+        longitude: userLocation.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  };  
   
   console.log(userLocation)
 
@@ -39,9 +58,12 @@ const MapScreen = ({ locations, selectedLocation }) => {
         <MenuSVG/>
       </View>
       <View style={styles.geo_btn}>
-        <GeoSVG/>
+        <TouchableOpacity onPress={centerMapOnUserLocation}>
+          <GeoSVG/>
+        </TouchableOpacity>
       </View>
       <MapView
+        ref={mapViewRef}
         showsMyLocationButton={false}
         showsUserLocation={false}
         style={mapStyles.map}
@@ -56,12 +78,11 @@ const MapScreen = ({ locations, selectedLocation }) => {
         userLocationFastestInterval={100}
         showsCompass={false}
       >
-        { userLocation ? (
-          <Marker
-            coordinate={userLocation?.coords}
-            image={require("../pages/Таксишка.png")}
-          />
-        ) : (null) }
+        {userLocation ? (
+          <Marker anchor={{ x: 0.5, y: 0.5 }} coordinate={userLocation.coords}>
+            <TaxCarSVG />
+          </Marker>
+        ) : null}
         {locations?.map((location, index) => (
           <Marker
             key={index}
@@ -74,7 +95,7 @@ const MapScreen = ({ locations, selectedLocation }) => {
         <MapViewDirections
           origin={userLocation?.coords}
           destination={selectedLocation}
-          apikey={"AIzaSyADp9Xd0Zj1Gwe8I7CY0WaUCau1Tfl76hY"}
+          apikey={GOOGLE_API_KEY}
           strokeWidth={5}
           mode={'DRIVING'}
         />

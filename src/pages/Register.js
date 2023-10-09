@@ -20,7 +20,8 @@ const RegisterScreen = () => {
   async function handleRegister() {
     setIsButtonDisabled(true);
 
-    const user = getUserID();
+    const user = await getUserID();
+
     const userData = {
       username: user.username,
       first_name: first_name,

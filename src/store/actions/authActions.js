@@ -42,10 +42,20 @@ export const signInUser = async (username, password, dispatch) => {
 export const registerUser = async (userData, id) => {
     try {
         const userDataForToken = {
-            username: userData.username,
-            password: userData.password
+            username: userData?.username,
+            password: userData?.password
         }
         const getToken = await axios.post(`${API_URL}/login/jwt/create/`, userDataForToken);
+
+        const forRegisterData = {
+            username: userData?.username,
+            first_name: userData?.first_name,
+            last_name: userData?.last_name,
+            email: userData?.email,
+            phone_number: userData?.phone_number
+        }
+
+        console.log(forRegisterData);
 
         const response = await fetch(`${API_URL}/user/users/${id}/`, {
             method: 'PATCH',
@@ -53,7 +63,7 @@ export const registerUser = async (userData, id) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${getToken.data.access}`
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(forRegisterData)
         });
 
         if (!response.ok) {

@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Animated, PanResponder } from 'react-native';
+import SwipeSVG from '../static/Swipe';
 
 export const CustomSwitch = ({ isOn, handleToggle, colorOne, colorTwo }) => {
     const animateCircle = useRef(new Animated.Value(isOn ? 130 : 10)).current;
     const animateTextOpacity = useRef(new Animated.Value(isOn ? 0 : 1)).current;
+    const positionX = useRef(new Animated.Value(isOn ? 0 : 100)).current;
     const [active, setActive] = useState(isOn);
     const swipeEnded = useRef(false);
 
@@ -17,7 +19,11 @@ export const CustomSwitch = ({ isOn, handleToggle, colorOne, colorTwo }) => {
                 toValue: active ? 0 : 1,
                 duration: 200,
                 useNativeDriver: false,
-            })
+            }),
+            Animated.spring(positionX, {
+                toValue: active ? 0 : 100,
+                useNativeDriver: false,
+            }),          
         ]).start();
     }, [active]);
 
@@ -46,6 +52,7 @@ export const CustomSwitch = ({ isOn, handleToggle, colorOne, colorTwo }) => {
             {...panResponder.panHandlers}
             style={[styles.container, { backgroundColor: active ? colorTwo : colorOne }]}
         >
+            <SwipeSVG isOn={isOn} />
             <Animated.Text style={[styles.textStyles, { left: 70, opacity: animateTextOpacity }]}>ПОЕХАЛИ</Animated.Text>
             <Animated.View style={[styles.circle, { left: animateCircle }]} />
             <Animated.Text style={[styles.textStyles, { right: 70, opacity: animateTextOpacity.interpolate({

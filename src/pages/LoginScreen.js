@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styles/AuthorizationStyles';
@@ -16,14 +16,14 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   async function handleSignIn() {
-    setIsButtonDisabled(true);
-    const response = await signInUser(username, password, dispatch);
-    const user_id = response.user_id;
     const user_data = {
       user_id: user_id,
-      username: username,
-      password: password
+      username: username.trim(),
+      password: password.trim()
     }
+    setIsButtonDisabled(true);
+    const response = await signInUser(user_data.username, user_data.password, dispatch);
+    const user_id = response.user_id;
     await AsyncStorage.setItem('user', JSON.stringify(user_data));
 
     if(user_data?.user_id) {
@@ -34,13 +34,19 @@ const LoginScreen = () => {
     setIsButtonDisabled(false);
   }
 
+  useEffect(() => {
+    if(!username) {
+      navigation.navigate("HomeTab")
+    }
+  }, [username])
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <LogoSVG />
       <TextInput 
         style={styles.input}
         placeholder="Имя пользователя"
-        onChangeText={(e) => setUsername(e)}
+        onChangeText={(e) => setUsername(e.toLocaleLowerCase())}
         value={username}
       />
       <TextInput

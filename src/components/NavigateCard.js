@@ -36,7 +36,7 @@ function NavigateCard({ locations, setSelectedLocation }) {
             <CustomSwitch
               isOn={checked}
               handleToggle={() => setChecked(!checked)}
-              colorOne="#145BA6"
+              colorOne="#819CB9"
               colorTwo="#00964F"
             />
         </View>
